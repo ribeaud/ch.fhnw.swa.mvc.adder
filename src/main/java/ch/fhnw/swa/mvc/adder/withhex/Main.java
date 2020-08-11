@@ -58,6 +58,11 @@ public class Main extends Application {
                 (observable, oldValue, newValue) -> value2.set(intFromString(newValue,
                         10)));
         sum.textProperty().bind(value1.add(value2).asString());
+        op1Hex.textProperty().addListener((observable, oldValue, newValue) -> value1.set(intFromString(newValue, 16)));
+        value1.addListener((observable, oldValue, newValue) -> op1Hex.setText(stringFromInt(newValue, 16)));
+        op2Hex.textProperty().addListener((observable, oldValue, newValue) -> value2.set(intFromString(newValue, 16)));
+        value2.addListener((observable, oldValue, newValue) -> op2Hex.setText(stringFromInt(newValue, 16)));
+        sumHex.textProperty().bind(value1.add(value2).asString("%x"));
     }
 
     private int intFromString(String s, int base) {
