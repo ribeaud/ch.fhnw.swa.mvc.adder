@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'idea'
+}
+
+sourceCompatibility = 12
+targetCompatibility = 12
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    jcenter()
+}
+
+def currentOS = org.gradle.internal.os.OperatingSystem.current()
+def platform
+if (currentOS.isWindows()) {
+    platform = 'win'
+} else if (currentOS.isLinux()) {
+    platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+    platform = 'mac'
+}
+
+dependencies {
+    compile "org.openjfx:javafx-base:11:${platform}"
+    compile "org.openjfx:javafx-graphics:11:${platform}"
+    compile "org.openjfx:javafx-fxml:11:${platform}"
+    compile "org.openjfx:javafx-controls:11:${platform}"
+}
+
+compileJava {
+	options.compilerArgs = [
+		'--module-path', classpath.asPath
+	]
+}
+
+task runSimple(type:JavaExec) {
+	group 'application'
+    classpath = sourceSets.main.runtimeClasspath
+	main = 'ch.fhnw.swa.mvc.adder/ch.fhnw.swa.mvc.adder.simple.Main'
+    jvmArgs = [
+        '--module-path', classpath.asPath,
+		'--patch-module', "ch.fhnw.swa.mvc.adder=" + files(sourceSets.main.output.resourcesDir).asPath,
+        '--module', main
+    ]
+}
+
+task runWithHex(type:JavaExec) {
+	group 'application'
+    classpath = sourceSets.main.runtimeClasspath
+	main = 'ch.fhnw.swa.mvc.adder/ch.fhnw.swa.mvc.adder.withhex.Main'
+    jvmArgs = [
+        '--module-path', classpath.asPath,
+		'--patch-module', "ch.fhnw.swa.mvc.adder=" + files(sourceSets.main.output.resourcesDir).asPath,
+        '--module', main
+    ]
+}
