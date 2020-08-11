@@ -19,9 +19,7 @@ public class View {
     private TextField sumHex;
 
     public void setModel(Model model) {
-        if (this.model != null) {
-            throw new IllegalStateException();
-        }
+        if (this.model != null) throw new IllegalStateException();
         this.model = model;
         model.value1.addListener((observable, oldValue, newValue) -> op1.textProperty().set(newValue.toString()));
         model.value2.addListener((observable, oldValue, newValue) -> op2.textProperty().set(newValue.toString()));
