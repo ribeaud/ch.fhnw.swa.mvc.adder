@@ -51,12 +51,10 @@ public class Main extends Application {
 
     @FXML
     private void initialize() {
-        op1.textProperty().addListener(
-                (observable, oldValue, newValue) -> value1.set(intFromString(newValue,
-                        10)));
-        op2.textProperty().addListener(
-                (observable, oldValue, newValue) -> value2.set(intFromString(newValue,
-                        10)));
+        op1.textProperty().addListener((observable, oldValue, newValue) -> value1.set(intFromString(newValue, 10)));
+        value1.addListener((observable, oldValue, newValue) -> op1.setText(stringFromInt(newValue, 10)));
+        op2.textProperty().addListener((observable, oldValue, newValue) -> value2.set(intFromString(newValue, 10)));
+        value2.addListener((observable, oldValue, newValue) -> op2.setText(stringFromInt(newValue, 10)));
         sum.textProperty().bind(value1.add(value2).asString());
         op1Hex.textProperty().addListener((observable, oldValue, newValue) -> value1.set(intFromString(newValue, 16)));
         value1.addListener((observable, oldValue, newValue) -> op1Hex.setText(stringFromInt(newValue, 16)));
