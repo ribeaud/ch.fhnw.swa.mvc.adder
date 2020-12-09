@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 public class View {
+    // A view renders some or all of the data contained within the model.
     private Model model = null;
     @FXML
     private TextField op1;
